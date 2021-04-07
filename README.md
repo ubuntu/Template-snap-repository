@@ -34,6 +34,23 @@ git remote add ubuntu https://github.com/ubuntu/SNAP_NAME.git
 git fetch --all
 ```
 
+### Testing your changes
+To test your changes, you'll need to build your snap. You can do this with either [multipass](https://multipass.run/)
+```
+snapcraft
+```
+or with [lxd](https://snapcraft.io/docs/build-on-lxd):
+```
+snapcraft --use-lxd --debug
+```
+The `--debug` option will just drop you into the snap if a build error occurs, so you can further triage. It is completely optional and can be left off.
+
+Once the build finishes, you will have <yoursnap>.snap in your current directory. Install it on a test system to test the changes.
+```
+sudo snap install <yoursnap>.snap --dangerous
+```
+Note you need to add the `--dangerous` flag because the snap is not being installed from the store (and signed by the store certificate, so it's an auto trusted source).
+
 ### Submitting changes in a pr
 
 Once you're all setup for contributing, keep in mind that you want the git information to be all up-to-date. So if you haven't "fetched" all changes in a while, start with that:
